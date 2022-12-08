@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { userInfoAction } from '../redux/actions';
+import { currenciesAction, userInfoAction } from '../redux/actions';
 
 const PASSWORD_NUMBER = 6;
 
@@ -22,6 +22,7 @@ class Login extends React.Component {
     const { email } = this.state;
     const { dispatch, history } = this.props;
     dispatch(userInfoAction(email));
+    dispatch(currenciesAction());
     history.push('/carteira');
   };
 
@@ -49,7 +50,6 @@ class Login extends React.Component {
             disabled={
               password.length < PASSWORD_NUMBER || (!email.includes('@')
               || !email.includes('.com'))
-              // || !email[0] !== '@')
             }
             onClick={ this.handleSubmit }
           >

@@ -1,4 +1,5 @@
-import { ADD_CURRENCIES_ACTION, ERROR_MESSAGE, SAVE_FORM_EXPENSES } from '../actions';
+import { ADD_CURRENCIES_ACTION,
+  DELETE_EXPENSES, ERROR_MESSAGE, SAVE_FORM_EXPENSES } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
@@ -28,6 +29,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       error: action.erro,
     });
+  case DELETE_EXPENSES:
+    return {
+      ...state,
+      expenses: action.id,
+    };
   default:
     return state;
   }

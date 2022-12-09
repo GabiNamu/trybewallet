@@ -2,6 +2,7 @@ export const SAVE_USER_INFO = 'SAVE_USER_INFO';
 export const ADD_CURRENCIES_ACTION = 'ADD_CURRENCIES_ACTION';
 export const SAVE_FORM_EXPENSES = 'SAVE_FORM_EXPENSES';
 export const ERROR_MESSAGE = 'ERROR_MESSAGE';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export const userInfoAction = (email) => ({
   type: SAVE_USER_INFO,
@@ -21,6 +22,11 @@ export const saveFormExpenses = (expenses, coin) => ({
 export const erroMessage = (erro) => ({
   type: ERROR_MESSAGE,
   erro,
+});
+
+export const deleteExpenses = (id) => ({
+  type: DELETE_EXPENSES,
+  id,
 });
 
 export const currencyCountingAction = (expenses, coin) => ((dispatch) => {

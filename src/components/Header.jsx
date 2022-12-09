@@ -16,7 +16,7 @@ class Header extends Component {
             const mul = element.value * element.exchangeRates[currency].ask;
             const total = sum + mul;
             return total;
-          }, 0).toFixed(2) : 0}
+          }, 0).toFixed(2) : (0).toFixed(2)}
         </p>
         <p data-testid="header-currency-field">BRL</p>
       </header>

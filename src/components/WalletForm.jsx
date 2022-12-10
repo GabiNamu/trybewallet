@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { currencyCountingAction } from '../redux/actions';
+import { currencyCountingAction, saveEdit } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
@@ -29,8 +29,18 @@ class WalletForm extends Component {
     });
   };
 
+  handleEdit = () => {
+    const { dispatch } = this.props;
+    dispatch(saveEdit(this.state));
+    this.setState({
+      value: '',
+      description: '',
+    });
+    console.log(this.state);
+  };
+
   render() {
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
     const { value, description, currency, method, tag } = this.state;
 
     return (
@@ -57,7 +67,7 @@ class WalletForm extends Component {
           onChange={ this.handleChange }
         >
           {currencies.map((element) => (
-            <option key={ element } value={ element } name="currency">
+            <option key={ element } value={ element }>
               {element}
             </option>
           ))}
@@ -85,7 +95,9 @@ class WalletForm extends Component {
           <option value="Transporte">Transporte</option>
           <option value="Saúde">Saúde</option>
         </select>
-        <button type="button" onClick={ this.handleSubmit }>Adicionar despesa</button>
+        <button type="button" onClick={ editor ? this.handleEdit : this.handleSubmit }>
+          {editor ? 'Editar despesa' : 'Adicionar despesa'}
+        </button>
       </form>
     );
   }
@@ -94,10 +106,12 @@ class WalletForm extends Component {
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
+  editor: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  editor: state.wallet.editor,
 });
 
 export default connect(mapStateToProps)(WalletForm);

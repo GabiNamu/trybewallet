@@ -44,11 +44,11 @@ describe('componente Login', () => {
     const button = screen.getByRole('button', { name: /entrar/i });
     const inputPassword = screen.getByTestId(/password-input/i);
 
-    userEvent.type(inputEmail, 'gabi@live.com');
+    userEvent.type(inputEmail, 'a@live.com');
     userEvent.type(inputPassword, '1234');
 
     expect(button.disabled).toBe(true);
-    expect(inputEmail.value).toBe('gabi@live.com');
+    expect(inputEmail.value).toBe('a@live.com');
     expect(inputPassword.value).toBe('1234');
   });
 
@@ -74,7 +74,7 @@ describe('component Header', () => {
     const button = screen.getByRole('button', { name: /entrar/i });
     const inputPassword = screen.getByTestId(/password-input/i);
 
-    userEvent.type(inputEmail, 'gabriela@live.com');
+    userEvent.type(inputEmail, 'gabi@live.com');
     userEvent.type(inputPassword, '123456');
     userEvent.click(button);
 
@@ -83,7 +83,7 @@ describe('component Header', () => {
     const title = screen.getByRole('heading', {
       name: /trybewallet/i,
     });
-    const emailEl = screen.getByText(/gabriela@live.com/i);
+    const emailEl = screen.getByText(/gabi@live.com/i);
 
     expect(title).toBeInTheDocument();
     expect(emailEl).toBeInTheDocument();
@@ -119,5 +119,35 @@ describe('component WalletForm', () => {
     expect(brlEl).toBeInTheDocument();
     expect(buttonAdd).toBeInTheDocument();
     expect(descriptionEl).toBeInTheDocument();
+  });
+
+  test('verifica se o fetch é chamado novamente quando clica no botão de adicionar', () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockData),
+    });
+
+    renderWithRouterAndRedux(<App />);
+    const inputEmail = screen.getByRole('textbox');
+    const button = screen.getByRole('button', { name: /entrar/i });
+    const inputPassword = screen.getByTestId(/password-input/i);
+
+    userEvent.type(inputEmail, 'gabriela@live.com');
+    userEvent.type(inputPassword, '123456');
+    userEvent.click(button);
+
+    const inputValue = screen.getByTestId('value-input');
+    const inputDescription = screen.getByTestId('description-input');
+
+    userEvent.type(inputValue, 10);
+    userEvent.type(inputDescription, 'dez');
+    const buttonAdd = screen.getByRole('button', {
+      name: /adicionar despesa/i,
+    });
+    userEvent.click(buttonAdd);
+    const select = screen.getByTestId('tag-input');
+    expect(select).toBeInTheDocument();
+    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(global.fetch).toHaveBeenCalledWith('https://economia.awesomeapi.com.br/json/all');
   });
 });

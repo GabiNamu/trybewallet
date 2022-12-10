@@ -1,5 +1,6 @@
 import { ADD_CURRENCIES_ACTION,
-  DELETE_EXPENSES, ERROR_MESSAGE, SAVE_FORM_EXPENSES } from '../actions';
+  DELETE_EXPENSES, ERROR_MESSAGE, INITIAL_EDIT,
+  SAVE_EDIT, SAVE_FORM_EXPENSES } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
@@ -12,27 +13,42 @@ const INITIAL_STATE = {
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_CURRENCIES_ACTION:
-    return ({
+    return {
       ...state,
       currencies: action.payload.filter((element) => element !== 'USDT'),
-    });
+    };
   case SAVE_FORM_EXPENSES:
-    return ({
+    return {
       ...state,
       expenses: [...state.expenses,
         { id: state.expenses.length,
           ...action.payload[0],
           exchangeRates: action.payload[1] }],
-    });
+    };
   case ERROR_MESSAGE:
-    return ({
+    return {
       ...state,
       error: action.erro,
-    });
+    };
   case DELETE_EXPENSES:
     return {
       ...state,
-      expenses: action.id,
+      expenses: state.expenses.filter((expense) => expense.id !== action.id),
+    };
+  case INITIAL_EDIT:
+    return {
+      ...state,
+      editor: true,
+      idToEdit: action.id,
+    };
+  case SAVE_EDIT:
+    return {
+      ...state,
+      expenses: state.expenses
+        .map((expense) => (expense.id === Number(state.idToEdit)
+          ? ({ id: expense.id, ...action.payload, exchangeRates: expense.exchangeRates })
+          : expense)),
+      editor: false,
     };
   default:
     return state;

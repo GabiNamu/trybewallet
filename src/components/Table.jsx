@@ -1,30 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpenses } from '../redux/actions';
+import { deleteExpenses, initialEdit } from '../redux/actions';
 
 class Table extends Component {
   handleClick = (id) => {
-    const { dispatch, expenses } = this.props;
-    const data = expenses.filter((expense) => expense.id !== id);
-    dispatch(deleteExpenses(data));
+    const { dispatch } = this.props;
+    dispatch(deleteExpenses(id));
+  };
+
+  handleEdit = (e) => {
+    const { dispatch } = this.props;
+    dispatch(initialEdit(e.target.id));
+    console.log(e.target.id);
   };
 
   render() {
     const { expenses } = this.props;
     return (
       <table>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio utilizado</th>
-          <th>Valor convertido</th>
-          <th>Moeda de conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
+        </thead>
         <tbody>
           {expenses.map((
             { description, tag, method,
@@ -47,6 +54,14 @@ class Table extends Component {
                   onClick={ () => this.handleClick(id) }
                 >
                   Deletar
+                </button>
+                <button
+                  type="button"
+                  id={ id }
+                  data-testid="edit-btn"
+                  onClick={ (e) => this.handleEdit(e) }
+                >
+                  Editar
                 </button>
               </td>
             </tr>

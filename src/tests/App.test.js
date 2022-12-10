@@ -121,7 +121,7 @@ describe('component WalletForm', () => {
     expect(descriptionEl).toBeInTheDocument();
   });
 
-  test('verifica se o fetch é chamado novamente quando clica no botão de adicionar', () => {
+  test('verifica se o fetch é chamado novamente quando clica no botão de adicionar', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValue(mockData),
@@ -138,6 +138,12 @@ describe('component WalletForm', () => {
 
     const inputValue = screen.getByTestId('value-input');
     const inputDescription = screen.getByTestId('description-input');
+    const elTable = screen.getByRole('columnheader', {
+      name: /moeda de conversão/i,
+    });
+    const elTable2 = screen.getByRole('columnheader', {
+      name: /tag/i,
+    });
 
     userEvent.type(inputValue, 10);
     userEvent.type(inputDescription, 'dez');
@@ -146,8 +152,49 @@ describe('component WalletForm', () => {
     });
     userEvent.click(buttonAdd);
     const select = screen.getByTestId('tag-input');
+    const usd = screen.getByRole('columnheader', {
+      name: /tag/i,
+    });
+
+    const food = await screen.findByText(/alimentação/i);
+
+    const deleteButton = await screen.findByRole('button', {
+      name: /deletar/i,
+    });
+
+    const editButton = await screen.findByRole('button', {
+      name: /editar/i,
+    });
     expect(select).toBeInTheDocument();
     expect(global.fetch).toHaveBeenCalledTimes(2);
     expect(global.fetch).toHaveBeenCalledWith('https://economia.awesomeapi.com.br/json/all');
+    expect(usd).toBeInTheDocument();
+    expect(food).toBeInTheDocument();
+    expect(deleteButton).toBeInTheDocument();
+    expect(editButton).toBeInTheDocument();
+    expect(elTable).toBeInTheDocument();
+    expect(elTable2).toBeInTheDocument();
+
+    userEvent.click(deleteButton);
+
+    expect(deleteButton).not.toBeInTheDocument();
+    expect(editButton).not.toBeInTheDocument();
+
+    userEvent.type(inputValue, '10');
+    userEvent.type(inputDescription, 'dez');
+    userEvent.click(buttonAdd);
+
+    userEvent.click(await screen.findByRole('button', {
+      name: /editar/i,
+    }));
+    userEvent.type(inputValue, '20');
+    userEvent.type(inputDescription, 'vinte');
+    const save = await screen.findByRole('button', {
+      name: /editar despesa/i,
+    });
+    userEvent.click(save);
+
+    expect(await screen.findByText('20.00')).toBeInTheDocument();
+    expect(await screen.findByText('vinte')).toBeInTheDocument();
   });
 });

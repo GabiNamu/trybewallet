@@ -69,17 +69,21 @@ describe('componente Login', () => {
 
 describe('component Header', () => {
   test('verifica se as informações estão renderizadas', () => {
-    renderWithRouterAndRedux(<App />);
-    const inputEmail = screen.getByRole('textbox');
-    const button = screen.getByRole('button', { name: /entrar/i });
-    const inputPassword = screen.getByTestId(/password-input/i);
+    const initialState = {
+      user: {
+        email: 'gabi@live.com',
+      },
+      wallet: {
+        currencies: ['USD', 'CAD', 'GBP', 'ARS', 'BTC', 'LTC', 'EUR', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP', 'DOGE'],
+        expenses: [],
+        editor: false,
+        idToEdit: 0,
+      },
+    };
 
-    userEvent.type(inputEmail, 'gabi@live.com');
-    userEvent.type(inputPassword, '123456');
-    userEvent.click(button);
+    renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState });
 
     const price = screen.getByTestId(/total-field/i);
-
     const title = screen.getByRole('heading', {
       name: /trybewallet/i,
     });

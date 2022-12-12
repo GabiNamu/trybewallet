@@ -4,6 +4,7 @@ import { ADD_CURRENCIES_ACTION,
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
+  idCount: -1,
   currencies: [],
   expenses: [],
   editor: false,
@@ -21,9 +22,10 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses,
-        { id: state.expenses.length,
+        { id: state.idCount + 1,
           ...action.payload[0],
           exchangeRates: action.payload[1] }],
+      idCount: state.idCount + 1,
     };
   case ERROR_MESSAGE:
     return {

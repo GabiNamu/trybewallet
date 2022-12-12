@@ -36,9 +36,8 @@ class Table extends Component {
           {expenses.map((
             { description, tag, method,
               currency, exchangeRates, value, id },
-            index,
           ) => (
-            <tr key={ index }>
+            <tr key={ id }>
               <td>{ description }</td>
               <td>{ tag }</td>
               <td>{ method }</td>

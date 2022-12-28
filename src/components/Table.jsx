@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteExpenses, initialEdit } from '../redux/actions';
+import photo from '../pages/css/Vector-7.png';
+import foto from '../pages/css/Vector-8.png';
 
 class Table extends Component {
   handleClick = (id) => {
@@ -18,55 +20,70 @@ class Table extends Component {
   render() {
     const { expenses } = this.props;
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((
-            { description, tag, method,
-              currency, exchangeRates, value, id },
-          ) => (
-            <tr key={ id }>
-              <td>{ description }</td>
-              <td>{ tag }</td>
-              <td>{ method }</td>
-              <td>{ parseFloat(value).toFixed(2) }</td>
-              <td>{ exchangeRates[currency].name}</td>
-              <td>{ parseFloat(exchangeRates[currency].ask).toFixed(2) }</td>
-              <td>{ (value * exchangeRates[currency].ask).toFixed(2) }</td>
-              <td>Real</td>
-              <td>
-                <button
-                  type="button"
-                  data-testid="delete-btn"
-                  onClick={ () => this.handleClick(id) }
-                >
-                  Deletar
-                </button>
-                <button
-                  type="button"
-                  id={ id }
-                  data-testid="edit-btn"
-                  onClick={ (e) => this.handleEdit(e) }
-                >
-                  Editar
-                </button>
-              </td>
+      <div className="container-table">
+        <table className="table">
+          <thead>
+            <tr>
+              <th className="title-table">Descrição</th>
+              <th className="title-table">Tag</th>
+              <th className="title-table">Método de pagamento</th>
+              <th className="title-table">Valor</th>
+              <th className="title-table">Moeda</th>
+              <th className="title-table">Câmbio utilizado</th>
+              <th className="title-table">Valor convertido</th>
+              <th className="title-table">Moeda de conversão</th>
+              <th className="title-table">Editar/Excluir</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {expenses.map((
+              { description, tag, method,
+                currency, exchangeRates, value, id },
+              index,
+            ) => (
+              <tr key={ index } className="container-table-elements">
+                <td className="table-elements">{ description }</td>
+                <td className="table-elements">{ tag }</td>
+                <td className="table-elements">{ method }</td>
+                <td className="table-elements">{ parseFloat(value).toFixed(2) }</td>
+                <td className="table-elements">{ exchangeRates[currency].name}</td>
+                <td
+                  className="table-elements"
+                >
+                  { parseFloat(exchangeRates[currency].ask).toFixed(2) }
+
+                </td>
+                <td
+                  className="table-elements"
+                >
+                  { (value * exchangeRates[currency].ask).toFixed(2) }
+
+                </td>
+                <td className="table-elements">Real</td>
+                <td className="table-elements">
+                  <button
+                    type="button"
+                    className="button-table"
+                    id={ id }
+                    data-testid="edit-btn"
+                    onClick={ (e) => this.handleEdit(e) }
+                  >
+                    <img src={ photo } alt="edit button" />
+                  </button>
+                  <button
+                    type="button"
+                    className="button-table"
+                    data-testid="delete-btn"
+                    onClick={ () => this.handleClick(id) }
+                  >
+                    <img src={ foto } alt="delete button" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }

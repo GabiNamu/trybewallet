@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { RiDeleteBack2Fill } from 'react-icons/ri';
+import { FiEdit } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteExpenses, initialEdit } from '../redux/actions';
-import photo from '../pages/css/Vector-7.png';
-import foto from '../pages/css/Vector-8.png';
 
 class Table extends Component {
   handleClick = (id) => {
@@ -68,7 +68,7 @@ class Table extends Component {
                     data-testid="edit-btn"
                     onClick={ (e) => this.handleEdit(e) }
                   >
-                    <img src={ photo } alt="edit button" />
+                    <FiEdit />
                   </button>
                   <button
                     type="button"
@@ -76,7 +76,7 @@ class Table extends Component {
                     data-testid="delete-btn"
                     onClick={ () => this.handleClick(id) }
                   >
-                    <img src={ foto } alt="delete button" />
+                    <RiDeleteBack2Fill />
                   </button>
                 </td>
               </tr>

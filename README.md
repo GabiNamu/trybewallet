@@ -5,6 +5,8 @@ Trybewallet is an expense control wallet with currency converter, when using thi
 - View a table with your expenses;
 - View total spend converted to a currency of your choice;
 
+![login](./src/images/login.png)
+
 ## How to use:
 - First clone the repository into your machine;
 

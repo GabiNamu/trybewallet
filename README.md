@@ -1,13 +1,32 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# TrybeWallet
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+Trybewallet is an expense control wallet with currency converter, when using this application the user will be able to:
+- Add, remove and edit an expense;
+- View a table with your expenses;
+- View total spend converted to a currency of your choice;
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+## How to use:
+- First clone the repository into your machine;
+
+```
+ git clone git@github.com:GabiNamu/trybewallet.git
+```
+- After cloning, enter into the repository and install the dependencies;
+
+```
+npm install
+```
+- Then to see in your browser, you just need to do a npm start;
+```
+npm start
+```
+
+## Main technologies used:
+- React;
+- Redux;
+- JavaScript;
+- Css;
+
+
+
+

@@ -56,7 +56,7 @@ class Login extends React.Component {
             onChange={ this.handleChange }
             data-testid="password-input"
           />
-          {password.length < 6 && password.length !== 0
+          {password.length < Number('6') && password.length !== 0
             ? <p className="input-invalid">senha inválida</p> : ''}
           <button
             type="button"
